@@ -7,7 +7,8 @@ export function registerVisibilityHooks<T extends string, V extends MotionVarian
 
   // Bind intersection observer on target
   if (_variants && (_variants.visible || _variants.visibleOnce)) {
-    useIntersectionObserver(target, ([{ isIntersecting }]) => {
+    useIntersectionObserver(target, (observerEntries: IntersectionObserverEntry[]) => {
+      const isIntersecting = observerEntries.some(({ isIntersecting }) => isIntersecting)
       if (_variants.visible) {
         if (isIntersecting) variant.value = 'visible'
         else variant.value = 'initial'
